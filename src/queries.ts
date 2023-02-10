@@ -84,6 +84,14 @@ query TeacherRatingsPageQuery(
       numRatings
       legacyId
       wouldTakeAgainPercent
+      numRatings
+      ratings(first: 20) {
+        edges {
+          node {
+            comment
+          }
+        }
+      }
     }
     id
   }
