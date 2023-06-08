@@ -4,6 +4,9 @@ dist
 dts
 dev.js
 
+# Samples
+samples/
+
 # Logs
 logs
 *.log
