@@ -1,72 +1,75 @@
-# 🧑‍🏫 @mtucourses/rate-my-professors
+# 🧑‍🏫 @ritchiefu/rate-my-professors
 
-[![codecov](https://codecov.io/gh/Michigan-Tech-Courses/rate-my-professors/branch/master/graph/badge.svg?token=YSBV5T5GVY)](https://codecov.io/gh/Michigan-Tech-Courses/rate-my-professors)
+A basic wrapper for Rate My Professors's GraphQL API forked from @mtucourses/rate-my-professors. Includes TypeScript definitions.
 
-A basic wrapper for Rate My Professors's GraphQL API. Includes TypeScript definitions.
-
-It is possible to pull full ratings with content as well, but currently this package just returns the average.
+This version allows users to get data on teachers within a certain department (ex: Engineering, Biology, Humanities, etc.)
+The GraphQL queries are the same as the ones on RateMyProfessors and the amount of data returned can be large.
 
 ## 🏗 Usage
 
 ```js
 // Change to 
-// const ratings = require('@mtucourses/rate-my-professors').default;
+// const ratings = require('@ritchiefu/rate-my-professors').default;
 // if using JS instead of TS
-import ratings from '@mtucourses/rate-my-professors';
+import ratings from '@ritchiefu/rate-my-professors';
+
+const variables = {
+  "query": {
+      "text": "",
+      "schoolID": GONZAGA_ID,
+      "fallback": true,
+      "departmentID": GONZAGA_DEPARTMENT_ID.business
+  },
+  "schoolID": GONZAGA_ID
+}
+
+// id of professor Scott Coble at Gonzaga University
+const teacher_variables = {
+  "id": "VGVhY2hlci0zNjc5Mw=="
+}
 
 (async () => {
-  const schools = await ratings.searchSchool('michigan technological university');
 
-  console.log(schools);
-  /*
-    [
-      {
-        city: 'Houghton',
-        id: 'U2Nob29sLTYwMg==',
-        name: 'Michigan Technological University',
-        state: 'MI'
-      }
-    ]
-  */
+  const page = await ratings.getAllProfessorsInDepartment(variables);
 
-  const teachers = await ratings.searchTeacher('mtu shene');
+  console.log(page);
+  // {
+  //     school: {
+  //       __typename: 'School',
+  //       id: 'U2Nob29sLTM3MA==',
+  //       name: 'Gonzaga University',
+  //     },
+  //     search: {
+  //       teachers: {
+  //         didFallback: false,
+  //         edges: [
+  //           {
+  //             cursor: 'YXJyYXljb25uZWN0aW9uOjA=',
+  //             node: {
+  //               __typename: 'Teacher',
+  //               avgDifficulty: 3.1,
+  //               avgRating: 2.9,
+  //               department: 'Business',
+  //               firstName: 'Will',
+  //               id: 'VGVhY2hlci05OTU4NQ==',
+  //               isSaved: false,
+  //               lastName: 'Terpening',
+  //               legacyId: 99585,
+  //               numRatings: 17,
+  //               school: {
+  //                 id: 'U2Nob29sLTM3MA==',
+  //                 name: 'Gonzaga University',
+  //               },
+  //               wouldTakeAgainPercent: -1,
+  //             },
+  //           },
+  // Shows 8 professors for first query.
 
-  console.log(teachers);
-  /*
-    [
-      {
-        firstName: 'Ching-Kuang',
-        id: 'VGVhY2hlci0yMjkxNjI=',
-        lastName: 'Shene',
-        school: {
-          id: 'U2Nob29sLTYwMg==',
-          name: 'Michigan Technological University'
-        }
-      }
-    ] 
-  */
-
-  const teacher = await ratings.getTeacher('VGVhY2hlci0yMjkxNjI=');
+  const teacher = await ratings.getTeacher(teacher_variables);
 
   console.log(teacher);
-  /*
-    {
-      avgDifficulty: 4.4,
-      avgRating: 3.3,
-      numRatings: 28,
-      department: 'Computer Science',
-      firstName: 'Ching-Kuang',
-      id: 'VGVhY2hlci0yMjkxNjI=',
-      lastName: 'Shene',
-      school: {
-        city: 'Houghton',
-        id: 'U2Nob29sLTYwMg==',
-        name: 'Michigan Technological University',
-        state: 'MI'
-      },
-      legacyId: 1234567
-    }
-  */
+  // see e2e.ts.md snapshot for output. 
+
 })();
 ```
 
