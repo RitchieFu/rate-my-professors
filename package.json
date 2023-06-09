@@ -1,5 +1,5 @@
 {
-  "name": "@RitchieFu/rate-my-professors",
+  "name": "@ritchiefu/rate-my-professors",
   "keywords": [
     "🧑‍🏫",
     "ratemyprofessors",
@@ -13,8 +13,11 @@
   "description": "a basic wrapper for Rate My Professors's GraphQL API with reviews",
   "main": "dist/src/index.js",
   "types": "dts/src/index.d.ts",
-  "repository": "git@github.com:RitchieFu/rate-my-professors",
-  "author": "Max Isom <hi@maxisom.me>, Sazhelle Gutierrez-Moulton <szlgmoulton@gmail.com>, Ritchie Fu",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/RitchieFu/rate-my-professors.git"
+  },
+  "author": "Max Isom <hi@maxisom.me>",
   "license": "MIT",
   "files": [
     "dist/src",
@@ -86,5 +89,12 @@
     "require": [
       "ts-node/register"
     ]
+  },
+  "bugs": {
+    "url": "https://github.com/RitchieFu/rate-my-professors/issues"
+  },
+  "homepage": "https://github.com/RitchieFu/rate-my-professors#readme",
+  "directories": {
+    "test": "test"
   }
 }
