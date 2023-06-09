@@ -1,6 +1,6 @@
 import {GraphQLClient} from 'graphql-request';
-import {autocompleteSchoolQuery, searchTeacherQuery, getTeacherQuery, getDepartmentPaginationQuery, getDepartmentFirstPageQuery, } from './queries';
-import {AUTH_TOKEN, GONZAGA_DEPARTMENT_ID, GONZAGA_ID} from './constants';
+import {autocompleteSchoolQuery, searchTeacherQuery, getTeacherRatingsPageQuery, getDepartmentPaginationQuery, getDepartmentFirstPageQuery } from './queries';
+import {AUTH_TOKEN} from './constants';
 
 const client = new GraphQLClient('https://www.ratemyprofessors.com/graphql', {
   headers: {
@@ -66,13 +66,18 @@ const searchTeacher = async (name: string, schoolID: string): Promise<ITeacherFr
   return response.newSearch.teachers.edges.map((edge: { node: ITeacherFromSearch }) => edge.node);
 };
 
-const getTeacher = async (id: string): Promise<ITeacherPage> => {
-  const response = await client.request(getTeacherQuery, {id});
+// old version
+// const getTeacher = async (id: string): Promise<ITeacherPage> => {
+//   const response = await client.request(getTeacherQuery, {id});
 
-  return response.node;
-};
+//   return response.node;
+// };
 
-
+const getTeacher = async (variables: Object): Promise<ITeacherPage> => {
+  const response = await client.request(getTeacherRatingsPageQuery, variables);
+  
+  return response;
+}
 
 const getDepartmentPagination = async (variables: Object): Promise<ITeacherPage> => {
   const response = await client.request(getDepartmentPaginationQuery, variables);
@@ -80,12 +85,12 @@ const getDepartmentPagination = async (variables: Object): Promise<ITeacherPage>
   return response;
 };
 
+
 const getDepartmentFirstPage = async (variables: Object): Promise<ITeacherPage> => {
   const response = await client.request(getDepartmentFirstPageQuery, variables);
 
   return response;
 }
-
 
 
 const getAllProfessorsInDepartment = async (variables: DepartmentQuery): Promise<ITeacherPage> => {
@@ -99,7 +104,7 @@ const getAllProfessorsInDepartment = async (variables: DepartmentQuery): Promise
       "cursor": cursor,
       "query": {
           "text": "",
-          "schoolID": GONZAGA_ID,
+          "schoolID": variables.schoolID,
           "fallback": true,
           "departmentID": variables.query.departmentID
       }
