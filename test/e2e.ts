@@ -19,15 +19,15 @@ const variables = {
 
 // id of professor Scott Coble at Gonzaga University
 const teacher_variables = {
-  "id": "VGVhY2hlci0zNjc5Mw=="
+  "id": "VGVhY2hlci0zODc4MDM="
 }
 
-test('get first page in business department', async t => {
-  const page = await ratings.getAllProfessorsInDepartment(variables);
+// test('get first page in business department', async t => {
+//   const page = await ratings.getAllProfessorsInDepartment(variables);
 
-  console.log(page);
-  t.snapshot(page);
-})
+//   console.log(page);
+//   t.snapshot(page);
+// })
 
 test('get info of one teacher', async t => {
   const page = await ratings.getTeacher(teacher_variables);

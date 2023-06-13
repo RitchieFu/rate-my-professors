@@ -89,7 +89,7 @@ query TeacherRatingsPageQuery(
       legacyId
       wouldTakeAgainPercent
       numRatings
-      ratings(first: 20) {
+      ratings(first: 1000) {
         edges {
           node {
             class
@@ -106,6 +106,8 @@ query TeacherRatingsPageQuery(
 }
 `;
 
+
+// new features below
 export const getTeacherRatingsPageQuery = gql`
 query TeacherRatingsPageQuery(
   $id: ID!
@@ -197,7 +199,7 @@ fragment RatingsList_teacher on Teacher {
   }
   ...Rating_teacher
   ...NoRatingsArea_teacher
-  ratings(first: 20) {
+  ratings(first: 1000) {
     edges {
       cursor
       node {
@@ -583,7 +585,7 @@ query TeacherSearchResultsPageQuery(
 }
 
 fragment TeacherSearchPagination_search_1ZLmLD on newSearch {
-  teachers(query: $query, first: 8, after: "") {
+  teachers(query: $query, first: 1000, after: "") {
     didFallback
     edges {
       cursor

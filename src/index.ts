@@ -100,7 +100,7 @@ const getAllProfessorsInDepartment = async (variables: DepartmentQuery): Promise
   while (hasNextPage === true) {
     const cursor = response.search.teachers.pageInfo.endCursor;
     const pagination_variables = {
-      "count": 8,
+      "count": 100,
       "cursor": cursor,
       "query": {
           "text": "",
